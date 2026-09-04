@@ -1,0 +1,161 @@
+erDiagram
+    UTILISATEURS ||--o{ COMMENTAIRES : "écrit"
+    UTILISATEURS ||--o{ NOTES : "attribue"
+    UTILISATEURS ||--o{ FAVORIS : "ajoute"
+
+
+    SERIES ||--o{ VOLUMES : "contient"
+    SERIES ||--o{ TITRES_ALTERNATIFS : "possède"
+    SERIES ||--o{ COMMENTAIRES : "concerne"
+    SERIES ||--o{ NOTES : "concerne"
+    SERIES ||--o{ FAVORIS : "est ajoutée dans"
+    SERIES ||--o{ SERIES_GENRES : "possède"
+    SERIES ||--o{ SERIES_THEMES : "aborde"
+    SERIES ||--o{ SERIES_AUTEURS : "écrite par"
+    SERIES ||--o{ SERIES_ILLUSTRATEURS : "illustrée par"
+
+
+    VOLUMES ||--o{ COMMENTAIRES : "concerne"
+    VOLUMES ||--o{ NOTES : "concerne"
+
+
+    GENRES ||--o{ SERIES_GENRES : "regroupe"
+    THEMES ||--o{ SERIES_THEMES : "regroupe"
+    AUTEURS ||--o{ SERIES_AUTEURS : "participe à"
+    ILLUSTRATEURS ||--o{ SERIES_ILLUSTRATEURS : "participe à"
+
+
+    EDITEURS ||--o{ SERIES : "publie"
+
+
+    UTILISATEURS {
+        int id PK
+        string firebase_uid UK
+        string pseudo UK
+        string email UK
+        string avatar_url "NOT NULL, DEFAULT"
+        enum role "user | admin"
+        datetime created_at
+    }
+
+
+    SERIES {
+        int id PK
+        string titre
+        text synopsis
+        enum statut "en_cours | termine | en_pause | abandonne"
+        date date_debut_publication_fr
+        string couverture_url
+        int editeur_id FK
+        datetime created_at
+    }
+
+
+    TITRES_ALTERNATIFS {
+        int id PK
+        int serie_id FK
+        string titre
+        enum type "anglais | romaji | diminutif | autre, nullable"
+    }
+
+
+    VOLUMES {
+        int id PK
+        int serie_id FK
+        decimal numero_volume "4,1 - UNIQUE avec serie_id"
+        string titre
+        text synopsis
+        date date_sortie
+        string isbn "UK, nullable"
+        int nb_pages
+        string couverture_url
+    }
+
+
+    COMMENTAIRES {
+        int id PK
+        int user_id FK
+        int serie_id FK
+        int volume_id FK "nullable"
+        text contenu
+        datetime created_at
+    }
+
+
+    NOTES {
+        int id PK
+        int user_id FK
+        int serie_id FK
+        int volume_id FK "nullable"
+        int note "1 à 5 - UNIQUE avec user_id, serie_id, volume_id"
+        datetime created_at
+    }
+
+
+    GENRES {
+        int id PK
+        string nom UK
+    }
+
+
+    THEMES {
+        int id PK
+        string nom UK
+    }
+
+
+    AUTEURS {
+        int id PK
+        string nom
+        string prenom
+    }
+
+
+    ILLUSTRATEURS {
+        int id PK
+        string nom
+        string prenom
+    }
+
+
+    EDITEURS {
+        int id PK
+        string nom UK
+        string site_web "nullable"
+    }
+
+
+    FAVORIS {
+        int id PK
+        int user_id FK
+        int serie_id FK
+        datetime date_ajout "UNIQUE avec user_id, serie_id"
+    }
+
+
+    SERIES_GENRES {
+        int id PK
+        int serie_id FK
+        int genre_id FK "UNIQUE avec serie_id"
+    }
+
+
+    SERIES_THEMES {
+        int id PK
+        int serie_id FK
+        int theme_id FK "UNIQUE avec serie_id"
+    }
+
+
+    SERIES_AUTEURS {
+        int id PK
+        int serie_id FK
+        int auteur_id FK "UNIQUE avec serie_id"
+    }
+
+
+    SERIES_ILLUSTRATEURS {
+        int id PK
+        int serie_id FK
+        int illustrateur_id FK "UNIQUE avec serie_id"
+    }
