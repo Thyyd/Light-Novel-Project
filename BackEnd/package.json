@@ -7,10 +7,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma:migrate": "prisma migrate dev --config src/db/prisma.config.ts",
-    "prisma:generate": "prisma generate --config src/db/prisma.config.ts",
-    "prisma:studio": "prisma studio --config src/db/prisma.config.ts"
+    "test:db:reset": "docker compose -f ../docker-compose.yml rm -sf postgres-test && docker compose -f ../docker-compose.yml up -d postgres-test",
+    "test": "npm run test:db:reset && dotenv -e .env.test -- jest",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.14",
     "prisma": "^6.19.3"
   }

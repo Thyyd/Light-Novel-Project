@@ -3,21 +3,22 @@ node_modules/
 
 # Environment variables
 .env
+.env.test
 .env.local
 .env.*.local
-frontend/.env
-backend/.env
+FrontEnd/.env
+BackEnd/.env
 
 # Build outputs
-frontend/dist/
-frontend/dist-ssr/
-frontend/build/
-backend/dist/
+FrontEnd/dist/
+FrontEnd/dist-ssr/
+FrontEnd/build/
+BackEnd/dist/
 *.local
 
 # Prisma
-backend/src/db/prisma/*.db
-backend/src/db/generated/
+BackEnd/src/db/prisma/*.db
+BackEnd/src/db/generated/
 
 # Logs
 *.log
@@ -26,8 +27,8 @@ logs/
 
 # Coverage
 coverage/
-backend/coverage/
-frontend/coverage/
+BackEnd/coverage/
+FrontEnd/coverage/
 
 # OS / Editor
 .DS_Store

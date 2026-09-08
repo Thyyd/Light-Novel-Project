@@ -13,3 +13,239 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Entités indépendantes (aucune FK)
+enum Role {
+  user
+  admin
+}
+
+model Utilisateur {
+  id          Int      @id @default(autoincrement())
+  firebaseUid String   @unique @map("firebase_uid")
+  pseudo      String   @unique
+  email       String   @unique
+  avatarUrl   String   @default("") @map("avatar_url")
+  role        Role     @default(user)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  commentaires Commentaire[]
+  notes        Note[]
+  favoris      Favori[]
+
+  @@map("utilisateurs")
+}
+
+model Genre {
+  id  Int    @id @default(autoincrement())
+  nom String @unique
+
+  series SerieGenre[]
+
+  @@map("genres")
+}
+
+model Theme {
+  id  Int    @id @default(autoincrement())
+  nom String @unique
+
+  series SerieTheme[]
+
+  @@map("themes")
+}
+
+model Auteur {
+  id     Int    @id @default(autoincrement())
+  nom    String
+  prenom String
+
+  series SerieAuteur[]
+
+  @@map("auteurs")
+}
+
+model Illustrateur {
+  id     Int    @id @default(autoincrement())
+  nom    String
+  prenom String
+
+  series SerieIllustrateur[]
+
+  @@map("illustrateurs")
+}
+
+// Entités principales du catalogue
+model Editeur {
+  id      Int     @id @default(autoincrement())
+  nom     String  @unique
+  siteWeb String? @map("site_web")
+
+  series Serie[]
+
+  @@map("editeurs")
+}
+
+enum StatutSerie {
+  en_cours
+  termine
+  en_pause
+  abandonne
+}
+
+model Serie {
+  id                     Int         @id @default(autoincrement())
+  titre                  String
+  synopsis               String      @db.Text
+  statut                 StatutSerie
+  dateDebutPublicationFr DateTime?   @map("date_debut_publication_fr") @db.Date
+  couvertureUrl          String      @map("couverture_url")
+  editeurId              Int         @map("editeur_id")
+  createdAt              DateTime    @default(now()) @map("created_at")
+
+  editeur Editeur @relation(fields: [editeurId], references: [id], onDelete: Restrict)
+
+  volumes           Volume[]
+  titresAlternatifs TitreAlternatif[]
+  commentaires      Commentaire[]
+  notes             Note[]
+  favoris           Favori[]
+  genres            SerieGenre[]
+  themes            SerieTheme[]
+  auteurs           SerieAuteur[]
+  illustrateurs     SerieIllustrateur[]
+
+  @@map("series")
+}
+
+enum TypeTitreAlternatif {
+  anglais
+  romaji
+  diminutif
+  autre
+}
+
+model TitreAlternatif {
+  id      Int                  @id @default(autoincrement())
+  serieId Int                  @map("serie_id")
+  titre   String
+  type    TypeTitreAlternatif?
+
+  serie Serie @relation(fields: [serieId], references: [id], onDelete: Cascade)
+
+  @@map("titres_alternatifs")
+}
+
+model Volume {
+  id            Int       @id @default(autoincrement())
+  serieId       Int       @map("serie_id")
+  numeroVolume  Decimal   @map("numero_volume") @db.Decimal(4, 1)
+  titre         String
+  synopsis      String    @db.Text
+  dateSortie    DateTime? @map("date_sortie") @db.Date
+  isbn          String?   @unique
+  nbPages       Int       @map("nb_pages")
+  couvertureUrl String    @map("couverture_url")
+
+  serie        Serie         @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  commentaires Commentaire[]
+  notes        Note[]
+
+  @@unique([serieId, numeroVolume])
+  @@map("volumes")
+}
+
+// Contenu généré par les utilisateurs
+model Commentaire {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  serieId   Int      @map("serie_id")
+  volumeId  Int?     @map("volume_id")
+  contenu   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  utilisateur Utilisateur @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serie       Serie       @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  volume      Volume?     @relation(fields: [volumeId], references: [id], onDelete: Cascade)
+
+  @@map("commentaires")
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  serieId   Int      @map("serie_id")
+  volumeId  Int?     @map("volume_id")
+  note      Int // CHECK (note BETWEEN 1 AND 5) à ajouter manuellement en migration
+  createdAt DateTime @default(now()) @map("created_at")
+
+  utilisateur Utilisateur @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serie       Serie       @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  volume      Volume?     @relation(fields: [volumeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, serieId, volumeId])
+  // Index unique partiel supplémentaire à ajouter en migration :
+  // UNIQUE (user_id, serie_id) WHERE volume_id IS NULL
+  @@map("notes")
+}
+
+model Favori {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  serieId   Int      @map("serie_id")
+  dateAjout DateTime @default(now()) @map("date_ajout")
+
+  utilisateur Utilisateur @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serie       Serie       @relation(fields: [serieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, serieId])
+  @@map("favoris")
+}
+
+// Tables de jonction
+model SerieGenre {
+  id      Int @id @default(autoincrement())
+  serieId Int @map("serie_id")
+  genreId Int @map("genre_id")
+
+  serie Serie @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@unique([serieId, genreId])
+  @@map("series_genres")
+}
+
+model SerieTheme {
+  id      Int @id @default(autoincrement())
+  serieId Int @map("serie_id")
+  themeId Int @map("theme_id")
+
+  serie Serie @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  theme Theme @relation(fields: [themeId], references: [id], onDelete: Cascade)
+
+  @@unique([serieId, themeId])
+  @@map("series_themes")
+}
+
+model SerieAuteur {
+  id       Int @id @default(autoincrement())
+  serieId  Int @map("serie_id")
+  auteurId Int @map("auteur_id")
+
+  serie  Serie  @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  auteur Auteur @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+
+  @@unique([serieId, auteurId])
+  @@map("series_auteurs")
+}
+
+model SerieIllustrateur {
+  id             Int @id @default(autoincrement())
+  serieId        Int @map("serie_id")
+  illustrateurId Int @map("illustrateur_id")
+
+  serie        Serie        @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  illustrateur Illustrateur @relation(fields: [illustrateurId], references: [id], onDelete: Cascade)
+
+  @@unique([serieId, illustrateurId])
+  @@map("series_illustrateurs")
+}
