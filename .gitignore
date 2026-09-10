@@ -40,3 +40,7 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
+
+# Personal files
+*perso*
+BackEnd/src/scripts
