@@ -9,6 +9,7 @@ const requiredEnvVars = [
   'CLOUDINARY_CLOUD_NAME',
   'CLOUDINARY_API_KEY',
   'CLOUDINARY_API_SECRET',
+  'CLOUDINARY_DEFAULT_AVATAR_URL',
 ];
 
 function validateEnv() {
@@ -33,5 +34,6 @@ export const env = {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
     apiKey: process.env.CLOUDINARY_API_KEY,
     apiSecret: process.env.CLOUDINARY_API_SECRET,
+    defaultAvatarUrl: process.env.CLOUDINARY_DEFAULT_AVATAR_URL,
   },
 };
