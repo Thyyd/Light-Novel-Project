@@ -1,7 +1,5 @@
 # Documentation des APIs
 
-> **Statut** : Cette documentation décrit l'API cible du projet. Seules les routes marquées ✅ sont actuellement implémentées et testées ; les autres sont des spécifications prévisionnelles, sujettes à ajustement au moment de leur implémentation.
-
 ## Conventions générales
 
 **Base URL :** `/api`
@@ -28,14 +26,10 @@ Toutes les erreurs de l'API suivent ce format :
 
 ```json
 {
-  "error": {
-    "message": "Description lisible de l'erreur.",
-    "details": ["Détail optionnel 1", "Détail optionnel 2"]
-  }
+  "error": "ERROR_CODE",
+  "message": "Description lisible de l'erreur."
 }
 ```
-
-Le champ `details` n'est présent que pour les erreurs de validation (`400`), où il contient un tableau de messages précis par champ invalide. Pour les autres erreurs, seul `message` est renvoyé.
 
 ### Codes de statut utilisés dans l'ensemble de l'API
 
@@ -45,73 +39,41 @@ Le champ `details` n'est présent que pour les erreurs de validation (`400`), o�
 
 ## 1. Utilisateurs
 
-### 1.1 Inscription — créer un utilisateur✅
+### 1.1 Synchroniser l'utilisateur après connexion Firebase
 
 - **Méthode :** `POST`
-- **URL :** `/api/users`
-- **Authentification :** Requise (token Firebase valide ; l'utilisateur n'est pas encore en base à ce stade)
-- **But :** Créer la ligne correspondante dans la table `utilisateurs` lors de l'inscription. En cas d'échec de la création (pseudo déjà pris, erreur serveur), le compte Firebase Auth fraîchement créé est automatiquement supprimé (rollback) pour éviter tout compte orphelin entre Firebase et la base.
+- **URL :** `/api/users/sync`
+- **Authentification :** Requise (token Firebase valide, utilisateur pas forcément déjà en base)
+- **But :** Créer la ligne correspondante dans la table USERS lors du tout premier login, ou renvoyer l'utilisateur existant sinon (upsert basé sur `firebase_uid`).
 
 **Corps de la requête (request body)**
 
 ```json
 {
-  "pseudo": "SarahM"
+  "email": "sarah@example.com",
+  "displayName": "Sarah Martin"
 }
 ```
 
-*(`email` et `firebaseUid` sont extraits automatiquement du token Firebase vérifié, jamais du body — pour éviter qu'un client puisse usurper un email.)*
-
-**Contraintes sur `pseudo`**
-
-- 3 à 20 caractères (espaces en début/fin automatiquement retirés)
-- Caractères autorisés : lettres, chiffres, espaces, `@ - _ '`
-
-**Réponse en cas de succès — 201 Created**
+**Réponse en cas de succès — 200 OK (utilisateur existant) ou 201 Created (nouvel utilisateur)**
 
 ```json
 {
-  "data": {
-    "id": 12,
-    "firebaseUid": "abc123...",
-    "pseudo": "SarahM",
-    "email": "sarah@example.com",
-    "avatarUrl": "https://res.cloudinary.com/.../avatars/default.png",
-    "role": "user",
-    "createdAt": "2026-08-21T10:00:00.000Z"
-  }
+  "id": 12,
+  "email": "sarah@example.com",
+  "displayName": "Sarah Martin",
+  "role": "user",
+  "createdAt": "2026-08-21T10:00:00.000Z"
 }
 ```
 
 **Réponses d'erreur possibles**
 
-`400 Bad Request`
-```json
-{
-  "error": {
-    "message": "Données invalides",
-    "details": ["Le pseudo doit contenir au moins 3 caractères"]
-  }
-}
-```
-
 `401 Unauthorized`
 ```json
 {
-  "error": { "message": "Token manquant ou mal formé" }
-}
-```
-ou
-```json
-{
-  "error": { "message": "Token invalide ou expiré" }
-}
-```
-
-`409 Conflict`
-```json
-{
-  "error": { "message": "Ce pseudo est déjà utilisé" }
+  "error": "INVALID_TOKEN",
+  "message": "Le token Firebase fourni est invalide ou expiré."
 }
 ```
 

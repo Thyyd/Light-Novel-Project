@@ -3,22 +3,21 @@ node_modules/
 
 # Environment variables
 .env
-.env.test
 .env.local
 .env.*.local
-FrontEnd/.env
-BackEnd/.env
+frontend/.env
+backend/.env
 
 # Build outputs
-FrontEnd/dist/
-FrontEnd/dist-ssr/
-FrontEnd/build/
-BackEnd/dist/
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+backend/dist/
 *.local
 
 # Prisma
-BackEnd/src/db/prisma/*.db
-BackEnd/src/db/generated/
+backend/src/db/prisma/*.db
+backend/src/db/generated/
 
 # Logs
 *.log
@@ -27,8 +26,8 @@ logs/
 
 # Coverage
 coverage/
-BackEnd/coverage/
-FrontEnd/coverage/
+backend/coverage/
+frontend/coverage/
 
 # OS / Editor
 .DS_Store
@@ -40,7 +39,3 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
-
-# Personal files
-*perso*
-BackEnd/src/scripts
