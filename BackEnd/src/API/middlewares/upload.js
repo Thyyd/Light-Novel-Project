@@ -9,7 +9,9 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
   }
   else {
-    cb(new Error('Format de fichier non supporté (JPEG, PNG ou WEBP uniquement)'), false);
+    const error = new Error('Format de fichier non supporté (JPEG, PNG ou WEBP uniquement)');
+    error.status = 400;
+    cb(error, false, false);
   }
 };
 

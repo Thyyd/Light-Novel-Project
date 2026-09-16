@@ -251,33 +251,40 @@ ou
 }
 ```
 
-### 2.3 Créer une série
+### 2.3 Créer une série ✅
 
 - **Méthode :** `POST`
 - **URL :** `/api/series`
 - **Authentification :** Requise, rôle admin
+- **Content-Type :** `multipart/form-data` (upload de la couverture)
+- **But :** Créer une nouvelle série dans le catalogue. La couverture est uploadée sur Cloudinary dans un dossier dédié (`Series/<slug>/`, slug basé sur le titre diminutif s'il est fourni, sinon sur le titre complet). Si un titre diminutif est fourni, une entrée `TitreAlternatif` de type `diminutif` est créée dans la même transaction.
 
-**Corps de la requête (request body)**
+**Corps de la requête (form-data)**
 
-```json
-{
-  "title": "Re:Zero",
-  "synopsis": "Subaru se retrouve transporté...",
-  "coverUrl": "https://res.cloudinary.com/.../rezero.jpg",
-  "publisherId": 5,
-  "auteurIds": [2],
-  "genreIds": [1],
-  "themeIds": [4]
-}
-```
+| Champ | Type | Requis | Description |
+|---|---|---|---|
+| titre | string | Oui | 1 à 150 caractères. Doit être unique (insensible à la casse). |
+| synopsis | string | Oui | — |
+| statut | string (enum) | Oui | `en_cours`, `termine`, `en_pause` ou `abandonne` |
+| dateDebutPublicationFr | string (date) | Non | Format `AAAA-MM-JJ` |
+| editeurId | int | Oui | Doit référencer un éditeur existant |
+| titreDiminutif | string | Non | 1 à 50 caractères. Utilisé pour nommer le dossier Cloudinary et créer un `TitreAlternatif` associé. |
+| cover | file | Oui | JPEG, PNG ou WEBP, 5 Mo max |
 
 **Réponse en cas de succès — 201 Created**
 
 ```json
 {
-  "id": 3,
-  "title": "Re:Zero",
-  "createdAt": "2026-08-21T10:00:00.000Z"
+  "data": {
+    "id": 3,
+    "titre": "Re:Zero : Re:Vivre dans un autre monde à partir de zéro",
+    "synopsis": "Subaru se retrouve transporté dans un monde parallèle...",
+    "statut": "en_cours",
+    "dateDebutPublicationFr": null,
+    "couvertureUrl": "https://res.cloudinary.com/.../Series/re-zero/xxxxx.webp",
+    "editeurId": 5,
+    "createdAt": "2026-09-16T10:56:20.173Z"
+  }
 }
 ```
 
@@ -286,24 +293,43 @@ ou
 `400 Bad Request`
 ```json
 {
-  "error": "VALIDATION_ERROR",
-  "message": "Le champ title est requis."
+  "error": {
+    "message": "Données invalides",
+    "details": ["Le titre est obligatoire"]
+  }
+}
+```
+ou
+```json
+{
+  "error": { "message": "La couverture de la série est obligatoire" }
+}
+```
+ou
+```json
+{
+  "error": { "message": "Éditeur introuvable" }
+}
+```
+
+`401 Unauthorized`
+```json
+{
+  "error": { "message": "Utilisateur introuvable" }
 }
 ```
 
 `403 Forbidden`
 ```json
 {
-  "error": "FORBIDDEN",
-  "message": "Seul un administrateur peut créer une série."
+  "error": { "message": "Accès réservé aux administrateurs" }
 }
 ```
 
 `409 Conflict`
 ```json
 {
-  "error": "SERIES_ALREADY_EXISTS",
-  "message": "Une série avec ce titre existe déjà."
+  "error": { "message": "Une série avec ce titre existe déjà" }
 }
 ```
 
