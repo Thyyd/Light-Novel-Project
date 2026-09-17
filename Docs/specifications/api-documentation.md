@@ -426,66 +426,101 @@ ou
 }
 ```
 
-### 3.3 Ajouter un tome
+### 3.3 Ajouter un tome ✅
 
 - **Méthode :** `POST`
 - **URL :** `/api/series/{seriesId}/volumes`
 - **Authentification :** Requise, rôle admin
+- **Content-Type :** `multipart/form-data` (upload de la couverture)
+- **But :** Créer un nouveau tome pour une série existante. La couverture est uploadée sur Cloudinary dans le sous-dossier `volumes/` de la série concernée (`Series/<slug-série>/volumes/`, le slug étant calculé selon la même règle que pour la série : titre diminutif s'il existe, sinon titre complet).
 
-**Corps de la requête (request body)**
+**Corps de la requête (form-data)**
 
-```json
-{
-  "volumeNumber": 1,
-  "title": "Re:Zero - Tome 1",
-  "coverUrl": "https://res.cloudinary.com/.../rezero-t1.jpg",
-  "releaseDate": "2016-03-15",
-  "isbn": "978-2-3785-XXXX-X"
-}
-```
+| Champ | Type | Requis | Description |
+|---|---|---|---|
+| numeroVolume | number | Oui | Positif ou nul (0 accepté pour les préquels/hors-séries), max 999.9, une seule décimale autorisée (ex: 1, 2.5) |
+| titre | string | Oui | 1 à 150 caractères |
+| synopsis | string | Oui | Au moins 10 caractères |
+| nbPages | int | Oui | Entier positif, max 1000 |
+| isbn | string | Non | ISBN-10 ou ISBN-13, tirets/espaces tolérés (retirés automatiquement). Doit être unique tous volumes confondus. |
+| dateSortie | string (date) | Non | Format `AAAA-MM-JJ`. Une date future est acceptée (sorties à venir). |
+| cover | file | Oui | JPEG, PNG ou WEBP |
 
 **Réponse en cas de succès — 201 Created**
 
 ```json
 {
-  "id": 10,
-  "seriesId": 3,
-  "volumeNumber": 1,
-  "createdAt": "2026-08-21T10:00:00.000Z"
+  "data": {
+    "id": 1,
+    "serieId": 1,
+    "numeroVolume": "1",
+    "titre": "Classroom of the Elite",
+    "synopsis": "De l'extérieur, le lycée de haut niveau de Tokyo semble être un lieu de rêve...",
+    "dateSortie": "2024-02-23T00:00:00.000Z",
+    "isbn": null,
+    "nbPages": 320,
+    "couvertureUrl": "https://res.cloudinary.com/.../Series/classroom-of-the-elite/volumes/xxxxx.webp"
+  }
 }
 ```
+
+*(`numeroVolume` est renvoyé sous forme de string : comportement standard de Prisma lors de la sérialisation JSON d'un champ `Decimal`, pour ne pas perdre de précision.)*
 
 **Réponses d'erreur possibles**
 
 `400 Bad Request`
 ```json
 {
-  "error": "VALIDATION_ERROR",
-  "message": "Le champ volumeNumber est requis."
+  "error": {
+    "message": "Données invalides",
+    "details": ["Le titre du volume est obligatoire"]
+  }
+}
+```
+ou
+```json
+{
+  "error": { "message": "Identifiant de série invalide" }
+}
+```
+ou
+```json
+{
+  "error": { "message": "La couverture du volume est obligatoire" }
+}
+```
+
+`401 Unauthorized`
+```json
+{
+  "error": { "message": "Utilisateur introuvable" }
 }
 ```
 
 `403 Forbidden`
 ```json
 {
-  "error": "FORBIDDEN",
-  "message": "Seul un administrateur peut ajouter un tome."
+  "error": { "message": "Accès réservé aux administrateurs" }
 }
 ```
 
 `404 Not Found`
 ```json
 {
-  "error": "SERIES_NOT_FOUND",
-  "message": "Aucune série trouvée avec cet identifiant."
+  "error": { "message": "Série introuvable" }
 }
 ```
 
 `409 Conflict`
 ```json
 {
-  "error": "VOLUME_NUMBER_ALREADY_EXISTS",
-  "message": "Un tome avec ce numéro existe déjà pour cette série."
+  "error": { "message": "Ce numéro de volume existe déjà pour cette série" }
+}
+```
+ou
+```json
+{
+  "error": { "message": "Cet ISBN est déjà utilisé" }
 }
 ```
 
