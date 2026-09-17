@@ -181,7 +181,7 @@ ou
 
 ## 2. Séries
 
-### 2.1 Lister les séries
+### 2.1 Lister les séries ✅
 
 - **Méthode :** `GET`
 - **URL :** `/api/series`
@@ -191,9 +191,9 @@ ou
 
 | Paramètre | Type | Description |
 |---|---|---|
-| genre | string | Filtrer par genre (slug) |
-| theme | string | Filtrer par thème (slug) |
-| search | string | Recherche sur le titre |
+| genre | string | Non implémenté en V1 — Filtrer par genre (slug) |
+| theme | string | Non implémenté en V1 — Filtrer par thème (slug) |
+| search | string | Non implémenté en V1 — Recherche sur le titre |
 | page | int | Numéro de page (défaut : 1) |
 | limit | int | Résultats par page (défaut : 20) |
 
@@ -218,7 +218,7 @@ ou
 }
 ```
 
-### 2.2 Détail d'une série
+### 2.2 Détail d'une série ✅
 
 - **Méthode :** `GET`
 - **URL :** `/api/series/{id}`
