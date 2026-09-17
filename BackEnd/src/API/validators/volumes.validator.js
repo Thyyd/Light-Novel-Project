@@ -49,3 +49,29 @@ export const createVolumeBodySchema = z.object({
       .optional()
   ),
 });
+
+
+export const getVolumeDetailsParamsSchema = z.object({
+  id: z.coerce.number({ error: 'id doit être un entier' })
+    .int({ error: 'id doit être un entier' })
+    .positive({ error: 'id doit être positif' }),
+});
+
+export const getVolumeDetailsQuerySchema = z.object({
+  commentPage: z.preprocess(
+    emptyStringToUndefined,
+    z.coerce.number({ error: 'commentPage doit être un entier' })
+      .int({ error: 'commentPage doit être un entier' })
+      .positive({ error: 'commentPage doit être positif' })
+      .default(1),
+  ),
+
+  commentLimit: z.preprocess(
+    emptyStringToUndefined,
+    z.coerce.number({ error: 'commentLimit doit être un entier' })
+      .int({ error: 'commentLimit doit être un entier' })
+      .positive({ error: 'commentLimit doit être positif' })
+      .max(20, { error: 'commentLimit ne peut pas dépasser 20' })
+      .default(10),
+  ),
+});

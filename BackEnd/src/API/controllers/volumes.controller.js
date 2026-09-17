@@ -1,5 +1,5 @@
 import prisma from '../../db/client.js';
-import { createVolumeBodySchema } from '../validators/volumes.validator.js';
+import { createVolumeBodySchema, getVolumeDetailsParamsSchema, getVolumeDetailsQuerySchema } from '../validators/volumes.validator.js';
 import { getSerieSlug } from '../../utils/getSerieSlug.js';
 import { uploadImageToCloudinary } from '../../utils/uploadImage.js';
 import cloudinary from '../../config/cloudinary.js';
@@ -97,6 +97,125 @@ export async function createVolume(req, res, next) {
     }
 
     console.error('Échec de la création du volume:', error);
+    return next(error);
+  }
+}
+
+export async function getVolumeDetails(req, res, next) {
+  const paramsResult = getVolumeDetailsParamsSchema.safeParse(req.params);
+
+  if (!paramsResult.success) {
+    return res.status(400).json({
+      error: {
+        message: 'Paramètres invalides',
+        details: paramsResult.error.issues.map((issue) => issue.message),
+      },
+    });
+  }
+
+  const queryResult = getVolumeDetailsQuerySchema.safeParse(req.query);
+
+  if (!queryResult.success) {
+    return res.status(400).json({
+      error: {
+        message: 'Paramètres invalides',
+        details: queryResult.error.issues.map((issue) => issue.message),
+      },
+    });
+  }
+
+  const { id } = paramsResult.data;
+  const { commentPage, commentLimit } = queryResult.data;
+  const commentSkip = (commentPage - 1) * commentLimit;
+
+  try {
+    const volume = await prisma.volume.findUnique({
+      where: { id },
+      include: {
+        serie: {
+          include: {
+            editeur: { select: { nom: true } },
+            genres: { include: { genre: true } },
+            themes: { include: { theme: true } },
+            auteurs: { include: { auteur: true } },
+            illustrateurs: { include: { illustrateur: true } },
+            volumes: {
+              where: { id: { not: id } },
+              orderBy: { numeroVolume: 'asc' },
+              select: { id: true, numeroVolume: true, couvertureUrl: true },
+            },
+          },
+        },
+      },
+    });
+
+    if (!volume) {
+      return res.status(404).json({ error: { message: 'Volume introuvable' } });
+    }
+
+    const [moyenneResult, commentaires, totalCommentaires] = await Promise.all([
+      prisma.note.aggregate({
+        where: { volumeId: id },
+        _avg: { note: true },
+      }),
+      prisma.commentaire.findMany({
+        where: { volumeId: id },
+        orderBy: { createdAt: 'asc' },
+        skip: commentSkip,
+        take: commentLimit,
+        include: {
+          utilisateur: { select: { pseudo: true, avatarUrl: true } },
+        },
+      }),
+      prisma.commentaire.count({
+        where: { volumeId: id },
+      }),
+    ]);
+
+    const moyenneBrute = moyenneResult._avg.note;
+
+    const data = {
+      id: volume.id,
+      numeroVolume: volume.numeroVolume,
+      titre: volume.titre,
+      synopsis: volume.synopsis,
+      dateSortie: volume.dateSortie,
+      isbn: volume.isbn,
+      nbPages: volume.nbPages,
+      couvertureUrl: volume.couvertureUrl,
+      noteMoyenne: moyenneBrute != null ? Math.round(moyenneBrute * 10) / 10 : null,
+      serie: {
+        id: volume.serie.id,
+        titre: volume.serie.titre,
+      },
+      editeur: { nom: volume.serie.editeur.nom },
+      genres: volume.serie.genres.map((sg) => sg.genre.nom),
+      themes: volume.serie.themes.map((st) => st.theme.nom),
+      auteurs: volume.serie.auteurs.map((sa) => `${sa.auteur.nom} ${sa.auteur.prenom}`),
+      illustrateurs: volume.serie.illustrateurs.map((si) => `${si.illustrateur.nom} ${si.illustrateur.prenom}`),
+      autresVolumes: volume.serie.volumes,
+      commentaires: {
+        data: commentaires.map((c) => ({
+          id: c.id,
+          contenu: c.contenu,
+          utilisateur: {
+            pseudo: c.utilisateur.pseudo,
+            avatarUrl: c.utilisateur.avatarUrl,
+          },
+        })),
+        pagination: {
+          page: commentPage,
+          limit: commentLimit,
+          totalItems: totalCommentaires,
+          totalPages: Math.ceil(totalCommentaires / commentLimit),
+        },
+      },
+    };
+
+    return res.status(200).json({ data });
+  }
+  catch (error) {
+    console.error('Échec de la récupération des détails du volume:', error);
     return next(error);
   }
 }

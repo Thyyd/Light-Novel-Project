@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+const emptyStringToUndefined = (val) => (val === '' ? undefined : val);
 const STATUTS = ['en_cours', 'termine', 'en_pause', 'abandonne'];
 
 export const createSerieBodySchema = z.object({
@@ -24,7 +25,7 @@ export const createSerieBodySchema = z.object({
     .positive({ error: 'editeurId doit être positif' }),
 
   titreDiminutif: z.preprocess(
-    (val) => (val === '' ? undefined : val),
+    emptyStringToUndefined,
     z.string()
       .trim()
       .min(1, { error: 'Le titre diminutif ne peut pas être vide' })
@@ -35,7 +36,7 @@ export const createSerieBodySchema = z.object({
 
 export const getSeriesQuerySchema = z.object({
   page: z.preprocess(
-    (val) => (val === '' ? undefined : val),
+    emptyStringToUndefined,
     z.coerce.number({ error: 'page doit être un entier' })
       .int({ error: 'page doit être un entier' })
       .positive({ error: 'page doit être positif' })
@@ -43,7 +44,7 @@ export const getSeriesQuerySchema = z.object({
   ),
 
   limit: z.preprocess(
-    (val) => (val === '' ? undefined : val),
+    emptyStringToUndefined,
     z.coerce.number({ error: 'limit doit être un entier' })
       .int({ error: 'limit doit être un entier' })
       .positive({ error: 'limit doit être positif' })
@@ -60,7 +61,7 @@ export const getDetailedSerieParamsSchema = z.object({
 
 export const getDetailedSerieQuerySchema = z.object({
   commentPage: z.preprocess(
-    (val) => (val === '' ? undefined : val),
+    emptyStringToUndefined,
     z.coerce.number({ error: 'commentPage doit être un entier' })
       .int({ error: 'commentPage doit être un entier' })
       .positive({ error: 'commentPage doit être positif' })
@@ -68,7 +69,7 @@ export const getDetailedSerieQuerySchema = z.object({
   ),
 
   commentLimit: z.preprocess(
-    (val) => (val === '' ? undefined : val),
+    emptyStringToUndefined,
     z.coerce.number({ error: 'commentLimit doit être un entier' })
       .int({ error: 'commentLimit doit être un entier' })
       .positive({ error: 'commentLimit doit être positif' })
