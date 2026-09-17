@@ -376,53 +376,99 @@ ou
 
 ## 3. Volumes
 
-### 3.1 Lister les tomes d'une série
+### 3.1 Lister les tomes d'une série ❌ *(abandonné)*
 
-- **Méthode :** `GET`
-- **URL :** `/api/series/{seriesId}/volumes`
-- **Authentification :** Non requise
+> **Note :** Cette route ne sera pas implémentée. Les volumes d'une série sont directement inclus dans la réponse de `GET /api/series/{id}` (section 2.2), sous forme allégée (`id`, `numeroVolume`, `couvertureUrl`, triés par ordre croissant), ce qui évite un aller-retour HTTP supplémentaire pour afficher la page de détail d'une série. Section conservée à titre de trace de la réflexion initiale.
 
-**Réponse en cas de succès — 200 OK**
+~~- **Méthode :** `GET`~~
+~~- **URL :** `/api/series/{seriesId}/volumes`~~
+~~- **Authentification :** Non requise~~
 
-```json
-[
-  {
-    "id": 10,
-    "volumeNumber": 1,
-    "title": "Re:Zero - Tome 1",
-    "coverUrl": "https://res.cloudinary.com/.../rezero-t1.jpg",
-    "releaseDate": "2016-03-15"
-  }
-]
-```
+---
 
-### 3.2 Détail d'un tome
+### 3.2 Détail d'un tome ✅
 
 - **Méthode :** `GET`
 - **URL :** `/api/volumes/{id}`
 - **Authentification :** Non requise
+- **But :** Renvoie le détail complet d'un volume, avec les informations héritées de sa série parente (genres, thèmes, auteurs, illustrateurs, éditeur), les autres volumes de la série (pour la navigation) et ses commentaires (paginés).
+
+**Paramètres de requête (query params)**
+
+| Paramètre | Type | Description |
+|---|---|---|
+| commentPage | int | Numéro de page des commentaires (défaut : 1) |
+| commentLimit | int | Commentaires par page (défaut : 10, max : 20) |
 
 **Réponse en cas de succès — 200 OK**
 
 ```json
 {
-  "id": 10,
-  "seriesId": 3,
-  "volumeNumber": 1,
-  "title": "Re:Zero - Tome 1",
-  "coverUrl": "https://res.cloudinary.com/.../rezero-t1.jpg",
-  "releaseDate": "2016-03-15",
-  "isbn": "978-2-3785-XXXX-X"
+  "data": {
+    "id": 10,
+    "numeroVolume": "1",
+    "titre": "Re:Zero - Tome 1",
+    "synopsis": "Subaru se retrouve transporté dans un monde parallèle...",
+    "dateSortie": "2016-03-15T00:00:00.000Z",
+    "isbn": "978-2-3785-XXXX-X",
+    "nbPages": 320,
+    "couvertureUrl": "https://res.cloudinary.com/.../rezero-t1.jpg",
+    "noteMoyenne": 4.2,
+    "serie": { "id": 3, "titre": "Re:Zero : Re:Vivre dans un autre monde à partir de zéro" },
+    "editeur": { "nom": "Ofelbe" },
+    "genres": ["Isekai", "Fantasy"],
+    "themes": ["Voyage dans le temps"],
+    "auteurs": ["Nagatsuki Tappei"],
+    "illustrateurs": ["Otsuka Shinichirou"],
+    "autresVolumes": [
+      { "id": 11, "numeroVolume": "2", "couvertureUrl": "https://res.cloudinary.com/.../rezero-t2.jpg" }
+    ],
+    "commentaires": {
+      "data": [
+        {
+          "id": 21,
+          "contenu": "Un incontournable de l'isekai !",
+          "utilisateur": { "pseudo": "SarahM", "avatarUrl": "https://res.cloudinary.com/.../avatar.png" }
+        }
+      ],
+      "pagination": {
+        "page": 1,
+        "limit": 10,
+        "totalItems": 8,
+        "totalPages": 1
+      }
+    }
+  }
 }
 ```
 
+*(`serie`, `editeur`, `genres`, `themes`, `auteurs` et `illustrateurs` proviennent de la série parente du volume, pas du volume lui-même. `autresVolumes` exclut le volume actuellement consulté et suit le même format allégé que sur `GET /api/series/{id}`. `noteMoyenne` et `commentaires` ne portent que sur ce volume précis (`volumeId` = cet id), contrairement à la règle "série uniquement" appliquée sur `GET /api/series/{id}`.)*
+
 **Réponses d'erreur possibles**
+
+`400 Bad Request`
+```json
+{
+  "error": {
+    "message": "Paramètres invalides",
+    "details": ["id doit être un entier"]
+  }
+}
+```
+ou
+```json
+{
+  "error": {
+    "message": "Paramètres invalides",
+    "details": ["commentLimit ne peut pas dépasser 20"]
+  }
+}
+```
 
 `404 Not Found`
 ```json
 {
-  "error": "VOLUME_NOT_FOUND",
-  "message": "Aucun tome trouvé avec cet identifiant."
+  "error": { "message": "Volume introuvable" }
 }
 ```
 
