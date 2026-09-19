@@ -82,11 +82,61 @@
   --color-button-main: #1FAE57;
   --color-star: #F2A33D;
   --color-star-border: #C97820;
-  --color-star-background: #FBF0DE
-  --color-lavender: #5A4A85;
-  --color-lavender-bg: #E8E3F5;
+  --color-star-background: #FBF0DE;
+  --color-genre: #5A4A85;
+  --color-genre-bg: #E8E3F5;
+  --color-theme: #3E5C43;
+  --color-theme-bg: #DCE8DE;
   --color-background: #F8F4EE;
   --color-white: #FFFFFF;
   --color-black: #000000;
   --color-blue-tag: #144BFF;
+  --color-logout-text: #BF0306;
 }
+
+:root {
+  background-color: var(--color-background);
+}
+
+/************************* General *************************/
+/*===== Tag =====*/
+.tag.genre {
+  background-color: var(--color-genre-bg);
+  color: var(--color-genre);
+  padding-inline: 0.75rem;
+}
+
+.tag.theme {
+  background-color: var(--color-theme-bg);
+  color: var(--color-theme);
+  padding-inline: 0.75rem;
+}
+
+@media (min-width: 48rem) {
+  .tag.genre,
+  .tag.theme {
+    font-size: 1rem;
+  }
+}
+
+/*===== Button =====*/
+.button.login {
+  width: 100%;
+  font-size: 1.5rem;
+  padding-block: 10px;
+}
+
+.button.register {
+  background-color: var(--color-interactive);
+  width: 100%;
+  font-size: 1.5rem;
+  padding-block: 10px;
+}
+
+button.logout {
+  background-color: var(--color-white);
+  width: 100%;
+  color: var(--color-logout-text);
+}
+
+

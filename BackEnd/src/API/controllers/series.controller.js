@@ -158,6 +158,7 @@ export async function getSeries(req, res, next) {
           : null,
         genres: serie.genres.map((sg) => sg.genre.nom),
         noteMoyenne: moyenneBrute != null ? Math.round(moyenneBrute * 10) / 10 : null,
+        statut: serie.statut,
       };
     });
 
