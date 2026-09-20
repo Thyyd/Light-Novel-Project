@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         // STUB : à remplacer par un vrai GET /api/users/me une fois la route créée
-        setUser({ pseudo: 'Thyyd', avatarUrl: 'https://res.cloudinary.com/isawmozm/image/upload/v1789554285/avatars/default.png', role: 'user' });
+        setUser({ pseudo: 'Shinigami', avatarUrl: 'https://res.cloudinary.com/isawmozm/image/upload/v1789554670/avatars/admin.jpg', role: 'admin' });
       } else {
         setUser(null);
       }
