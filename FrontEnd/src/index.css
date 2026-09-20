@@ -112,21 +112,14 @@
   padding-inline: 0.75rem;
 }
 
-@media (min-width: 48rem) {
-  .tag.genre,
-  .tag.theme {
-    font-size: 1rem;
-  }
-}
-
 /*===== Button =====*/
-.button.login {
+.button.login-button {
   width: 100%;
   font-size: 1.5rem;
   padding-block: 10px;
 }
 
-.button.register {
+.button.register-button {
   background-color: var(--color-interactive);
   width: 100%;
   font-size: 1.5rem;

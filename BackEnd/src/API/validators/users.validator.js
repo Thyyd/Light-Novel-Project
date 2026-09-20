@@ -9,3 +9,7 @@ export const pseudoSchema = z.string()
 export const registerBodySchema = z.object({
   pseudo: pseudoSchema,
 });
+
+export const lookupEmailQuerySchema = z.object({
+  pseudo: pseudoSchema,
+});

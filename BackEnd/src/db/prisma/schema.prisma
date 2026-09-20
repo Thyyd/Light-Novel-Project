@@ -23,7 +23,7 @@ enum Role {
 model Utilisateur {
   id          Int      @id @default(autoincrement())
   firebaseUid String   @unique @map("firebase_uid")
-  pseudo      String   @unique
+  pseudo      String
   email       String   @unique
   avatarUrl   String   @default("") @map("avatar_url")
   role        Role     @default(user)
