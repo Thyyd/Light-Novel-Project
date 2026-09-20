@@ -148,7 +148,7 @@ function Navbar() {
         ) : (
           <Button
             label="Se connecter"
-            onClick={() => { setIsMenuOpen(false); navigate('/login'); }}
+            onClick={() => { setIsMenuOpen(false); navigate('/login', { state: { from: location.pathname } }); }}
             className={"w-full md:w-fit mb-4 md:mb-0"}
           />
         )}
