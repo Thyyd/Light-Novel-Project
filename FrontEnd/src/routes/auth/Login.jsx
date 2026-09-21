@@ -80,7 +80,7 @@ function Login() {
             className='input-auth my-8'
             value={password}
             setValue={setPassword}
-            inputAttributes={{ required: true, minLength: 3, maxLength: 20 }}
+            inputAttributes={{ required: true, minLength: 8 }}
           />
           {error && <p>{error}</p>}
           <Button type="submit" disabled={loading} label={loading ? 'Connexion...' : 'Se connecter'} className={"login-button mb-8"} />
