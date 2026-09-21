@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebase';
@@ -82,19 +82,19 @@ function Login() {
             setValue={setPassword}
             inputAttributes={{ required: true, minLength: 8 }}
           />
-          {error && <p>{error}</p>}
+          {error && <p className="font-body text-error text-center">{error}</p>}
           <Button type="submit" disabled={loading} label={loading ? 'Connexion...' : 'Se connecter'} className={"login-button mb-8"} />
         </form>
 
         <div className="login-redirection flex flex-col md:flex-row md:justify-center items-center border-t border-[#777777] gap-1">
           <p className="font-body mt-8 md:my-8">Pas encore de compte ?</p>
-          <a
+          <Link
             className="font-body text-[1.125rem] text-interactive font-bold mb-8 md:my-8"
-            href="#"
-            onClick={(e) => e.preventDefault()}
+            to="/register"
+            state={{ from: location.state?.from }}
           >
             Cliquez ici pour vous inscrire
-          </a>
+          </Link>
         </div>
       </div>
     </div>

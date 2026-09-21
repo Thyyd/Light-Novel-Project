@@ -92,6 +92,7 @@
   --color-black: #000000;
   --color-blue-tag: #144BFF;
   --color-logout-text: #BF0306;
+  --color-error: #C5181A;
 }
 
 :root {
