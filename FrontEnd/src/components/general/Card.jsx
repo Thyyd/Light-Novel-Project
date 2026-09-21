@@ -5,13 +5,14 @@ import Tag from './Tag';
 function Card({ id, title, author, genres = [], status, rating, coverUrl }) {
 
   return(
-    <li className="serie-card relative flex flex-row md:flex-col items-center md:items-stretch bg-white w-[calc(100%-3rem)] min-w-80 max-w-108
-      aspect-8/5 max-h-60 mx-auto md:w-87.5 md:shrink-0 md:aspect-auto md:max-h-none md:mx-0 p-4 mt-4 overflow-hidden rounded-xl"
+    <li className="serie-card snap-start relative flex flex-row md:flex-col items-center md:items-stretch bg-white
+      w-[calc(100%-3rem)] min-w-80 max-w-108 aspect-8/5 max-h-60 mx-auto md:w-80 md:shrink-0 md:aspect-auto md:max-h-none
+      md:mx-0 p-4 mt-4 overflow-hidden rounded-xl"
     >
       <a
         href={`/series/${id}`}
         aria-label={`Voir la série ${title}`}
-        className="absolute inset-0"
+        className="absolute inset-0 z-10"
       ></a>
       <div className="serie flex flex-row md:flex-col items-center md:items-stretch md:gap-0 gap-4 h-full md:h-auto">
         <div className="serie-cover static md:relative h-full md:h-50 md:w-full shrink-0">
@@ -27,9 +28,11 @@ function Card({ id, title, author, genres = [], status, rating, coverUrl }) {
             src={coverUrl || '/default_image.png'}
             onError={(e) => { e.target.src = '/default_image.png'; }}
             alt={`Cover ${title}`}
-            className='serie-image h-full w-auto object-cover rounded-lg md:w-full'
+            className='serie-image h-full w-auto object-cover object-top rounded-lg md:w-full'
           />
-          <Tag label={status} className="hidden md:block md:absolute md:bottom-2 md:left-2" />
+          {status != null && (
+            <Tag label={status} className="hidden md:block md:absolute md:bottom-2 md:left-2" />
+          )}
         </div>
 
         <div className="serie-infos flex flex-col gap-6 h-full min-w-0 flex-1 md:text-center">

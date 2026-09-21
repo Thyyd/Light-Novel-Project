@@ -132,4 +132,20 @@ button.logout {
   color: var(--color-logout-text);
 }
 
+/*===== Carousel =====*/
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
 
+.carousel-track {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+/************************* Routes *************************/
+/*===== Series =====*/
+.series-pagination-desktop .active {
+  background-color: var(--color-blue-tag);
+  color: var(--color-white);
+  cursor: default;
+}
