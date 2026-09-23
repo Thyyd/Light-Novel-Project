@@ -42,17 +42,6 @@ function Login() {
       return;
     }
 
-    try {
-      const idToken = await auth.currentUser.getIdToken();
-      await axios.get('/api/users/me', {
-        headers: { Authorization: `Bearer ${idToken}` },
-      });
-      // stub pour le moment — rien à exploiter tant que la vraie route n'existe pas
-    }
-    catch (meError) {
-      console.error('GET user/me a échoué (stub) :', meError);
-    }
-
     setLoading(false);
     navigate(location.state?.from ?? '/');
   }
@@ -71,7 +60,7 @@ function Login() {
             className='input-auth'
             value={pseudo}
             setValue={setPseudo}
-            inputAttributes={{ required: true, minLength: 3, maxLength: 20 }}
+            inputAttributes={{ required: true, minLength: 3, maxLength: 20, name: 'username', autoComplete: 'username', placeholder: 'e.g. : The Fallen One' }}
           />
           <Input
             label="Mot de passe"
@@ -80,7 +69,7 @@ function Login() {
             className='input-auth my-8'
             value={password}
             setValue={setPassword}
-            inputAttributes={{ required: true, minLength: 8 }}
+            inputAttributes={{ required: true, minLength: 8, name: 'password', autoComplete: 'current-password', placeholder: '••••••••••' }}
           />
           {error && <p className="font-body text-error text-center">{error}</p>}
           <Button type="submit" disabled={loading} label={loading ? 'Connexion...' : 'Se connecter'} className={"login-button mb-8"} />
