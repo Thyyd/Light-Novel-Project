@@ -115,20 +115,25 @@ ou
 }
 ```
 
-### 1.2 Récupérer son propre profil
+### 1.2 Récupérer son propre profil ✅
 
 - **Méthode :** `GET`
 - **URL :** `/api/users/me`
 - **Authentification :** Requise
+- **But :** Renvoie les informations du compte actuellement connecté (utilisées notamment pour la Navbar et la page de profil).
 
 **Réponse en cas de succès — 200 OK**
 
 ```json
 {
-  "id": 12,
-  "email": "sarah@example.com",
-  "displayName": "Sarah Martin",
-  "role": "user"
+  "data": {
+    "id": 12,
+    "pseudo": "SarahM",
+    "avatarUrl": "https://res.cloudinary.com/.../avatar.png",
+    "role": "user",
+    "email": "sarah@example.com",
+    "createdAt": "2026-08-21T10:00:00.000Z"
+  }
 }
 ```
 
@@ -137,8 +142,20 @@ ou
 `401 Unauthorized`
 ```json
 {
-  "error": "UNAUTHENTICATED",
-  "message": "Vous devez être connecté pour accéder à cette ressource."
+  "error": { "message": "Token manquant ou mal formé" }
+}
+```
+ou
+```json
+{
+  "error": { "message": "Token invalide ou expiré" }
+}
+```
+
+`404 Not Found`
+```json
+{
+  "error": { "message": "Utilisateur non inscrit sur LightNoverse" }
 }
 ```
 
