@@ -69,12 +69,12 @@ function Register() {
         <form onSubmit={handleSubmit}>
           <Input
             label="Email"
-            type="text"
+            type="email"
             id="email"
             className='input-auth'
             value={email}
             setValue={setEmail}
-            inputAttributes={{ required: true }}
+            inputAttributes={{ required: true, name: 'email', autoComplete: 'email', placeholder: 'e.g. : mail@gmail.com' }}
           />
           <Input
             label="Username"
@@ -83,7 +83,7 @@ function Register() {
             className='input-auth my-8'
             value={pseudo}
             setValue={setPseudo}
-            inputAttributes={{ required: true, minLength: 3, maxLength: 20 }}
+            inputAttributes={{ required: true, minLength: 3, maxLength: 20, name: 'username', autoComplete: 'username', placeholder: 'e.g. : The Fallen One' }}
           />
           <Input
             label="Mot de passe"
@@ -92,7 +92,7 @@ function Register() {
             className='input-auth my-8'
             value={password}
             setValue={setPassword}
-            inputAttributes={{ required: true, minLength: 8 }}
+            inputAttributes={{ required: true, minLength: 8, name: 'password', autoComplete: 'new-password', placeholder: '••••••••••' }}
           />
           <Input
             label="Confirmer Mot de passe"
@@ -101,7 +101,7 @@ function Register() {
             className='input-auth my-8'
             value={confirmPassword}
             setValue={setConfirmPassword}
-            inputAttributes={{ required: true, minLength: 8 }}
+            inputAttributes={{ required: true, minLength: 8, name: 'confirm-password', autoComplete: 'new-password', placeholder: '••••••••••' }}
           />
           {error && <p className="font-body text-error text-center">{error}</p>}
           <Button type="submit" disabled={loading} label={loading ? 'Inscription en cours...' : "S'inscrire"} className={"register-button mb-8"} />
