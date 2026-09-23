@@ -18,7 +18,7 @@ export async function verifyFirebaseToken(req, res, next) {
     });
 
     if (!utilisateur) {
-      return res.status(404).json({ error: { message: 'Utilisateur non inscrit sur LightVerse' } });
+      return res.status(404).json({ error: { message: 'Utilisateur non inscrit sur LightNoverse' } });
     }
 
     req.user = utilisateur;
