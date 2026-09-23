@@ -84,6 +84,6 @@ describe('GET /api/users/me', () => {
       .set('Authorization', 'Bearer fake-token');
 
     expect(response.status).toBe(404);
-    expect(response.body.error.message).toBe('Utilisateur non inscrit sur LightVerse');
+    expect(response.body.error.message).toBe('Utilisateur non inscrit sur LightNoverse');
   });
 });
