@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
+import axios from 'axios';
 import { auth } from '../config/firebase';
 
 export const AuthContext = createContext(null);
@@ -9,10 +10,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // STUB : à remplacer par un vrai GET /api/users/me une fois la route créée
-        setUser({ pseudo: 'Shinigami', avatarUrl: 'https://res.cloudinary.com/isawmozm/image/upload/v1789554670/avatars/admin.jpg', role: 'admin' });
+        try {
+          const idToken = await firebaseUser.getIdToken();
+          const response = await axios.get('/api/users/me', {
+            headers: { Authorization: `Bearer ${idToken}` },
+          });
+          setUser(response.data.data);
+        }
+        catch (error) {
+          console.error('GET /api/users/me a échoué :', error);
+          setUser(null);
+        }
       } else {
         setUser(null);
       }
