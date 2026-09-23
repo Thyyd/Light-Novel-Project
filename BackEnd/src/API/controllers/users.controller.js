@@ -76,3 +76,22 @@ export async function getEmailByPseudo(req, res, next) {
     return next(error);
   }
 }
+
+export async function getMe(req, res, next) {
+  try {
+    if (!req.user) {
+      const error = new Error('Utilisateur non attaché à la requête (middleware manquant ou mal configuré)');
+      error.status = 500;
+      throw error;
+    }
+
+    const { id, pseudo, avatarUrl, role, email, createdAt } = req.user;
+
+    return res.status(200).json({
+      data: { id, pseudo, avatarUrl, role, email, createdAt },
+    });
+  }
+  catch (error) {
+    return next(error);
+  }
+}
