@@ -3,23 +3,23 @@ import Card from '../../components/general/Card';
 
 // Mocks des volumes, car l'endpoint GET /volumes n'a pas encore été implémenté.
 const derniersVolumes = [
-  { id: 1, title: 'Sword Art Online Vol. 13', author: 'Reki Kawahara', genres: ['Action', 'Science-Fiction', 'Romance'], status: 'En cours', coverUrl: null },
+  { id: 10, title: 'Sword Art Online Vol. 13', author: 'Reki Kawahara', genres: ['Action', 'Science-Fiction', 'Romance'], status: 'En cours', coverUrl: null },
   { id: 2, title: 'Re:Zero Vol. 16', author: 'Tappei Nagatsuki', genres: ['Isekai', 'Fantasy', 'Drama'], status: 'En cours', coverUrl: null },
-  { id: 3, title: 'The Eminence in Shadow Vol. 5', author: 'Daisuke Aizawa', genres: ['Action', 'Isekai', 'Comedy'], status: 'En cours', coverUrl: null },
-  { id: 4, title: 'Classroom of the Elite Vol. 5', author: 'Shogo Kinugasa', genres: ['School Life', 'Psychological', 'Drama'], status: 'En cours', coverUrl: null },
-  { id: 5, title: 'Danmachi Vol. 13', author: 'Fujino Omori', genres: ['Action', 'Adventure', 'Fantasy'], status: 'En cours', coverUrl: null },
+  { id: 4, title: 'The Eminence in Shadow Vol. 5', author: 'Daisuke Aizawa', genres: ['Action', 'Isekai', 'Comedy'], status: 'En cours', coverUrl: null },
+  { id: 1, title: 'Classroom of the Elite Vol. 5', author: 'Shogo Kinugasa', genres: ['School Life', 'Psychological', 'Drama'], status: 'En cours', coverUrl: null },
+  { id: 3, title: 'Danmachi Vol. 13', author: 'Fujino Omori', genres: ['Action', 'Adventure', 'Fantasy'], status: 'En cours', coverUrl: null },
   { id: 6, title: 'The Apothecary Diaries Vol. 8', author: 'Natsu Hyuuga', genres: ['Slice of Life', 'Drama', 'Mystery'], status: 'En cours', coverUrl: null },
-  { id: 7, title: 'That Time I Got Reincarnated as a Slime Vol. 9', author: 'Fuse', genres: ['Isekai', 'Action', 'Fantasy'], status: 'En cours', coverUrl: null },
-  { id: 8, title: '86 Vol. 6', author: 'Asato Asato', genres: ['Action', 'Science-Fiction', 'Drama'], status: 'En cours', coverUrl: null },
+  { id: 12, title: 'Moi, quand je me réincarne en Slime Vol. 9', author: 'Fuse', genres: ['Isekai', 'Action', 'Fantasy'], status: 'En cours', coverUrl: null },
+  { id: 5, title: '86 Vol. 6', author: 'Asato Asato', genres: ['Action', 'Science-Fiction', 'Drama'], status: 'En cours', coverUrl: null },
 ];
 
 const aVenir = [
-  { id: 101, title: 'Solo Leveling Vol. 4', author: 'Chugong', genres: ['Action', 'Adventure', 'Fantasy'], coverUrl: null },
-  { id: 102, title: 'Classroom of the Elite Vol. 6', author: 'Shogo Kinugasa', genres: ['School Life', 'Psychological', 'Drama'], coverUrl: null },
-  { id: 103, title: '86 Vol. 7', author: 'Asato Asato', genres: ['Action', 'Science-Fiction', 'Drama'], coverUrl: null },
-  { id: 104, title: 'Re:Zero Vol. 17', author: 'Tappei Nagatsuki', genres: ['Isekai', 'Fantasy', 'Drama'], coverUrl: null },
-  { id: 105, title: 'Konosuba Vol. 13', author: 'Natsume Akatsuki', genres: ['Comedy', 'Fantasy', 'Isekai'], coverUrl: null },
-  { id: 106, title: 'The Apothecary Diaries Vol. 9', author: 'Natsu Hyuuga', genres: ['Slice of Life', 'Drama', 'Mystery'], coverUrl: null },
+  { id: 14, title: 'Solo Leveling Vol. 4', author: 'Chugong', genres: ['Action', 'Adventure', 'Fantasy'], coverUrl: null },
+  { id: 1, title: 'Classroom of the Elite Vol. 6', author: 'Shogo Kinugasa', genres: ['School Life', 'Psychological', 'Drama'], coverUrl: null },
+  { id: 5, title: '86 Vol. 7', author: 'Asato Asato', genres: ['Action', 'Science-Fiction', 'Drama'], coverUrl: null },
+  { id: 2, title: 'Re:Zero Vol. 17', author: 'Tappei Nagatsuki', genres: ['Isekai', 'Fantasy', 'Drama'], coverUrl: null },
+  { id: 15, title: 'Konosuba Vol. 13', author: 'Natsume Akatsuki', genres: ['Comedy', 'Fantasy', 'Isekai'], coverUrl: null },
+  { id: 6, title: 'The Apothecary Diaries Vol. 9', author: 'Natsu Hyuuga', genres: ['Slice of Life', 'Drama', 'Mystery'], coverUrl: null },
 ];
 
 function Homepage() {

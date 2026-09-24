@@ -152,6 +152,7 @@ function Series() {
           {!loading && !error && series.map((serie) => (
           <Card
             key={serie.id}
+            id={serie.id}
             title={serie.titre}
             coverUrl={serie.couvertureUrl}
             author={serie.auteur}

@@ -4,6 +4,7 @@ import RedirectIfAuthenticated from './routes/guards/RedirectIfAuthenticated';
 import Navbar from './components/navigation/Navbar';
 import Homepage from './routes/pages/Homepage';
 import Series from './routes/pages/Series';
+import SerieDetailled from './routes/pages/SerieDetailled';
 import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
 // ... imports restants des pages
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/series" element={<Series />} />
+            <Route path="/series/:id" element={<SerieDetailled />} />
             <Route
               path="/login"
               element={<RedirectIfAuthenticated><Login /></RedirectIfAuthenticated>}
