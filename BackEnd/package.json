@@ -12,7 +12,7 @@
     "start": "node src/server.js",
     "test:db:reset": "docker compose -f ../docker-compose.yml rm -sf postgres-test && docker compose -f ../docker-compose.yml up -d postgres-test",
     "test:db:migrate": "dotenv -e .env.test -- prisma migrate deploy",
-    "test": "npm run test:db:reset && npm run test:db:migrate && dotenv -e .env.test -- jest",
+    "test": "npm run test:db:reset && npm run test:db:migrate && dotenv -e .env.test -- jest --runInBand",
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio"
