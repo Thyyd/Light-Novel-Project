@@ -9,6 +9,7 @@ Ce dossier centralise l'ensemble de la documentation du projet : spécifications
 
 ## Diagrammes
 
+- [Architecture de l'application](diagrams/architecture/architecture.svg)
 - [ERD — Modèle de données (Mermaid)](diagrams/erd/schema-erd.mmd)
 - [Diagramme de cas d'utilisation (UML)](diagrams/uml/use-case-diagram.png)
 - [Diagramme de séquence — Ajouter un volume (UML)](diagrams/uml/sequence-ajout-volume.png)
