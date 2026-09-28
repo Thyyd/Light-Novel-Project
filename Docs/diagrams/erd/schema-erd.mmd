@@ -41,7 +41,7 @@ erDiagram
 
     SERIES {
         int id PK
-        string titre
+        string titre, "UNIQUE (insensible à la casse)"
         text synopsis
         enum statut "en_cours | termine | en_pause | abandonne"
         date date_debut_publication_fr
