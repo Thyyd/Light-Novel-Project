@@ -71,7 +71,7 @@ function Login() {
             setValue={setPassword}
             inputAttributes={{ required: true, minLength: 8, name: 'password', autoComplete: 'current-password', placeholder: '••••••••••' }}
           />
-          {error && <p className="font-body text-error text-center">{error}</p>}
+          {error && <p className="font-body text-error text-center" role="alert">{error}</p>}
           <Button type="submit" disabled={loading} label={loading ? 'Connexion...' : 'Se connecter'} className={"login-button mb-8"} />
         </form>
 

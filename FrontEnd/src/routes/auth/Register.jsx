@@ -103,7 +103,7 @@ function Register() {
             setValue={setConfirmPassword}
             inputAttributes={{ required: true, minLength: 8, name: 'confirm-password', autoComplete: 'new-password', placeholder: '••••••••••' }}
           />
-          {error && <p className="font-body text-error text-center">{error}</p>}
+          {error && <p className="font-body text-error text-center" role="alert">{error}</p>}
           <Button type="submit" disabled={loading} label={loading ? 'Inscription en cours...' : "S'inscrire"} className={"register-button mb-8"} />
         </form>
 
