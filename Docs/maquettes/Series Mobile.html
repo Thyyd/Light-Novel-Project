@@ -1,0 +1,191 @@
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Maquette mobile de la page Series LightVerse avec filtres en accordeon scrollable et saut de page rapide</h2>
+
+<div style="display:flex;justify-content:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+  <button onclick="toggleSheet()" style="background:#fff;border:1px solid #E5E0D8;padding:8px 14px;border-radius:20px;font-family:Manrope,sans-serif;font-size:0.75rem;font-weight:600;color:#0F3ED9;cursor:pointer;">Voir les filtres</button>
+  <button onclick="togglePageJump()" style="background:#fff;border:1px solid #E5E0D8;padding:8px 14px;border-radius:20px;font-family:Manrope,sans-serif;font-size:0.75rem;font-weight:600;color:#0F3ED9;cursor:pointer;">Voir le saut de page</button>
+</div>
+
+<div id="wrapper" style="background:#F8F4EE;border-radius:16px;overflow:hidden;border:0.5px solid var(--border);font-family:Manrope,sans-serif;max-width:360px;margin:0 auto;position:relative;">
+
+  <div style="background:#0F3ED9;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;">
+    <span style="font-family:Spectral,serif;font-weight:700;font-size:1.15rem;color:#fff;">LightVerse</span>
+    <div style="width:32px;height:32px;position:relative;">
+      <div style="position:absolute;left:5px;right:5px;top:11px;height:2.5px;background:#fff;border-radius:2px;"></div>
+      <div style="position:absolute;left:5px;right:5px;top:19px;height:2.5px;background:#fff;border-radius:2px;"></div>
+      <div style="position:absolute;left:5px;right:5px;top:27px;height:2.5px;background:#fff;border-radius:2px;"></div>
+    </div>
+  </div>
+
+  <div style="padding:20px 20px 0;">
+    <h1 style="font-family:Spectral,serif;font-weight:700;font-size:1.25rem;margin:0 0 16px;color:#23262B;">Catalogue de s&#233;ries</h1>
+
+    <div style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:10px 14px;margin-bottom:12px;border:1px solid #E5E0D8;">
+      <span style="color:#A9A398;font-size:0.9rem;">&#128269;</span>
+      <span style="font-size:0.82rem;color:#A9A398;">Rechercher une s&#233;rie...</span>
+    </div>
+
+    <button onclick="toggleSheet()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#fff;border:1px solid #E5E0D8;border-radius:10px;padding:10px;font-family:Manrope,sans-serif;font-weight:700;font-size:0.82rem;color:#23262B;margin-bottom:18px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#23262B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2" fill="#fff"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2" fill="#fff"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2" fill="#fff"/></svg>
+      Filtrer &amp; trier
+    </button>
+  </div>
+
+  <div style="padding:0 20px 8px;display:flex;flex-direction:column;gap:12px;">
+
+    <div style="background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(120,95,60,0.12);padding:14px;display:flex;gap:12px;">
+      <div style="width:64px;height:92px;border-radius:6px;background:#E8E3F5;flex-shrink:0;"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:0.88rem;color:#23262B;margin-bottom:2px;">Re:Zero</div>
+        <div style="font-size:0.74rem;color:#6B7280;margin-bottom:8px;">Tappei Nagatsuki</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="background:#E8E3F5;color:#5A4A85;font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:20px;">Isekai</span>
+          <span style="color:#F2A33D;font-size:0.76rem;font-weight:700;">&#9733; 4.6</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(120,95,60,0.12);padding:14px;display:flex;gap:12px;">
+      <div style="width:64px;height:92px;border-radius:6px;background:#F5E3E3;flex-shrink:0;"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:0.88rem;color:#23262B;margin-bottom:2px;">Toradora !</div>
+        <div style="font-size:0.74rem;color:#6B7280;margin-bottom:8px;">Yuyuko Takemiya</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="background:#E8E3F5;color:#5A4A85;font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:20px;">Romance</span>
+          <span style="color:#F2A33D;font-size:0.76rem;font-weight:700;">&#9733; 4.8</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:12px;box-shadow:0 4px 14px rgba(120,95,60,0.12);padding:14px;display:flex;gap:12px;">
+      <div style="width:64px;height:92px;border-radius:6px;background:#E3EDF5;flex-shrink:0;"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:700;font-size:0.88rem;color:#23262B;margin-bottom:2px;">Overlord</div>
+        <div style="font-size:0.74rem;color:#6B7280;margin-bottom:8px;">Kugane Maruyama</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="background:#E8E3F5;color:#5A4A85;font-size:0.68rem;font-weight:600;padding:3px 9px;border-radius:20px;">Fantasy</span>
+          <span style="color:#F2A33D;font-size:0.76rem;font-weight:700;">&#9733; 4.8</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="position:relative;display:flex;align-items:center;justify-content:center;gap:20px;padding:20px 20px 26px;">
+    <span style="color:#A9A398;font-size:1rem;">&#8249;</span>
+    <span id="pageNumBtn" onclick="togglePageJump()" style="font-size:0.8rem;font-weight:700;color:#1996FF;cursor:pointer;text-decoration:underline;text-underline-offset:3px;">Page 1 / 12</span>
+    <span style="color:#0F3ED9;font-size:1rem;font-weight:700;">&#8250;</span>
+
+    <div id="pageJump" style="position:absolute;bottom:56px;left:50%;transform:translateX(-50%) scale(0.9);opacity:0;pointer-events:none;transition:all 0.2s ease;background:#fff;border-radius:10px;box-shadow:0 6px 18px rgba(120,95,60,0.18);padding:14px;width:190px;">
+      <div style="font-size:0.74rem;font-weight:600;color:#23262B;margin-bottom:8px;">Aller &#224; la page (1&#8211;12)</div>
+      <div style="display:flex;gap:8px;">
+        <input type="number" min="1" max="12" value="1" style="width:60px;padding:7px 8px;border:1px solid #E5E0D8;border-radius:6px;font-family:Manrope,sans-serif;font-size:0.8rem;box-sizing:border-box;">
+        <button onclick="togglePageJump()" style="flex:1;background:#1FAE57;color:#fff;border:none;border-radius:6px;font-family:Manrope,sans-serif;font-weight:700;font-size:0.78rem;">Aller</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="backdrop" onclick="toggleSheet()" style="position:absolute;inset:0;background:rgba(35,38,43,0.4);opacity:0;pointer-events:none;transition:opacity 0.25s;"></div>
+
+  <div id="sheet" style="position:absolute;left:0;right:0;bottom:0;max-height:88%;overflow-y:auto;background:#fff;border-radius:18px 18px 0 0;padding:20px 22px 26px;transform:translateY(100%);transition:transform 0.3s ease;box-shadow:0 -6px 20px rgba(120,95,60,0.18);">
+    <div style="width:36px;height:4px;background:#E5E0D8;border-radius:4px;margin:0 auto 16px;"></div>
+    <h3 style="font-family:Spectral,serif;font-weight:700;font-size:1rem;margin:0 0 16px;color:#23262B;">Filtrer &amp; trier</h3>
+
+    <div style="margin-bottom:16px;">
+      <span style="font-size:0.72rem;color:#6B7280;font-weight:600;display:block;margin-bottom:7px;">Statut</span>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;">
+        <span style="background:#E8E3F5;color:#5A4A85;font-size:0.74rem;font-weight:600;padding:6px 12px;border-radius:20px;">En cours</span>
+        <span style="background:#F0EDE5;color:#6B7280;font-size:0.74rem;font-weight:600;padding:6px 12px;border-radius:20px;">Termin&#233;</span>
+      </div>
+    </div>
+
+    <div class="accordion" style="border-top:0.5px solid #E5E0D8;">
+      <div onclick="toggleAccordion('accGenre')" style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;cursor:pointer;">
+        <span style="font-size:0.85rem;font-weight:700;color:#23262B;">Genre</span>
+        <span id="accGenreChevron" style="color:#A9A398;transition:transform 0.2s;">&#9662;</span>
+      </div>
+      <div id="accGenre" style="max-height:0;overflow-y:auto;transition:max-height 0.25s ease;">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:2px 2px 12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Isekai</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Fantasy</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Romance</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Com&#233;die</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Horreur</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Action</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" style="border-top:0.5px solid #E5E0D8;">
+      <div onclick="toggleAccordion('accTheme')" style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;cursor:pointer;">
+        <span style="font-size:0.85rem;font-weight:700;color:#23262B;">Th&#232;me</span>
+        <span id="accThemeChevron" style="color:#A9A398;transition:transform 0.2s;">&#9662;</span>
+      </div>
+      <div id="accTheme" style="max-height:0;overflow-y:auto;transition:max-height 0.25s ease;">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:2px 2px 12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Boucle temporelle</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Survie</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Harem</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Amiti&#233;</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" style="border-top:0.5px solid #E5E0D8;border-bottom:0.5px solid #E5E0D8;margin-bottom:16px;">
+      <div onclick="toggleAccordion('accEditeur')" style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;cursor:pointer;">
+        <span style="font-size:0.85rem;font-weight:700;color:#23262B;">&#201;diteur</span>
+        <span id="accEditeurChevron" style="color:#A9A398;transition:transform 0.2s;">&#9662;</span>
+      </div>
+      <div id="accEditeur" style="max-height:0;overflow-y:auto;transition:max-height 0.25s ease;">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:2px 2px 12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Ofelbe</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Ki-oon</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Meian</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#23262B;"><input type="checkbox"> Mangetsu</label>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <span style="font-size:0.72rem;color:#6B7280;font-weight:600;display:block;margin-bottom:7px;">Trier par</span>
+      <div style="background:#F8F4EE;border:1px solid #E5E0D8;border-radius:8px;padding:10px 12px;font-size:0.82rem;color:#23262B;display:flex;justify-content:space-between;align-items:center;">
+        A &#8594; Z <span style="color:#A9A398;">&#9662;</span>
+      </div>
+    </div>
+
+    <button style="width:100%;background:#1FAE57;color:#fff;border:none;padding:13px;border-radius:8px;font-family:Manrope,sans-serif;font-weight:700;font-size:0.9rem;">Appliquer</button>
+  </div>
+
+</div>
+
+<script>
+var sheetOpen = false;
+var pageJumpOpen = false;
+var accOpen = {};
+
+function toggleSheet() {
+  sheetOpen = !sheetOpen;
+  var sheet = document.getElementById('sheet');
+  var backdrop = document.getElementById('backdrop');
+  sheet.style.transform = sheetOpen ? 'translateY(0)' : 'translateY(100%)';
+  backdrop.style.opacity = sheetOpen ? '1' : '0';
+  backdrop.style.pointerEvents = sheetOpen ? 'auto' : 'none';
+}
+
+function togglePageJump() {
+  pageJumpOpen = !pageJumpOpen;
+  var el = document.getElementById('pageJump');
+  el.style.opacity = pageJumpOpen ? '1' : '0';
+  el.style.transform = pageJumpOpen ? 'translateX(-50%) scale(1)' : 'translateX(-50%) scale(0.9)';
+  el.style.pointerEvents = pageJumpOpen ? 'auto' : 'none';
+}
+
+function toggleAccordion(id) {
+  var content = document.getElementById(id);
+  var chevron = document.getElementById(id + 'Chevron');
+  var isOpen = accOpen[id];
+  accOpen[id] = !isOpen;
+  content.style.maxHeight = accOpen[id] ? '150px' : '0';
+  chevron.style.transform = accOpen[id] ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+</script>
