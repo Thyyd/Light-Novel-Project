@@ -135,7 +135,7 @@ function SerieDetailled() {
           />
 
           <div className="flex flex-col gap-1">
-            <div class="flex flex-row gap-1 items-center">
+            <div className="flex flex-row gap-1 items-center">
               {user && (
                 <button type="button" className="serie-bookmark text-interactive text-lg" aria-label="Ajouter aux favoris">
                   <FontAwesomeIcon icon={faBookmark} className="w-4 h-4" />
@@ -215,7 +215,7 @@ function SerieDetailled() {
       </div>
 
       {/* Bloc 4 : commentaires — première page (10, déjà appliqué côté back par défaut),
-          pas de pagination fonctionnelle pour le v0 ; séparation Desktop/Mobile à prévoir plus tard */}
+          pas de pagination fonctionnelle pour la v0 ; séparation Desktop/Mobile à prévoir plus tard */}
       <div className="serie-commentaires-desktop flex flex-col gap-4 bg-white rounded-2xl shadow-md p-6 m-6 md:p-8 md:m-12">
         <h2 className="font-title font-bold text-2xl text-black">Commentaires</h2>
         <ul className="serie-commentaires-list flex flex-col">
