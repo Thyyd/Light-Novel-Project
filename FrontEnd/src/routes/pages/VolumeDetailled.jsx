@@ -31,8 +31,8 @@ function VolumeDetailled() {
       });
   }, [id]);
 
-  if (loading) return <div className="volume-detail-page">Chargement...</div>;
-  if (error) return <div className="volume-detail-page">Échec de la requête</div>;
+  if (loading) return <main className="volume-detail-page">Chargement...</main>;
+  if (error) return <main className="volume-detail-page">Échec de la requête</main>;
   if (!volume) return null;
 
   const genresDiv = (
