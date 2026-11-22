@@ -34,8 +34,8 @@ function SerieDetailled() {
       });
   }, [id]);
 
-  if (loading) return <div className="serie-detail-page">Chargement...</div>;
-  if (error) return <div className="serie-detail-page">Échec de la requête</div>;
+  if (loading) return <main className="serie-detail-page">Chargement...</main>;
+  if (error) return <main className="serie-detail-page">Échec de la requête</main>;
   if (!serie) return null;
 
   const titresAlternatifsAffiches = serie.titresAlternatifs.map((ta) => ta.titre).join(' / ');

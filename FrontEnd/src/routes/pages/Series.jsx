@@ -80,7 +80,7 @@ function Series() {
   }
 
   return (
-    <div className="series-page px-10 py-8">
+    <main className="series-page px-10 py-8">
       <div className="series-header flex items-center justify-between mb-6">
         <h2 className="font-title text-3xl font-bold text-black">Catalogue de séries</h2>
         {user?.role === 'admin' && (
@@ -233,7 +233,7 @@ function Series() {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

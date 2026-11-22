@@ -24,7 +24,7 @@ const aVenir = [
 
 function Homepage() {
   return (
-    <div className="homepage-page px-8 md:px-10 py-8">
+    <main className="homepage-page px-8 md:px-10 py-8">
       <div className="homepage-presentation">
         <h1 className="font-title text-4xl font-bold text-black">
           Explorez l'univers des Light Novels
@@ -76,7 +76,7 @@ function Homepage() {
           </Carousel>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

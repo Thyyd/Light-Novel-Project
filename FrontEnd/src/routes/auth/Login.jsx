@@ -47,7 +47,7 @@ function Login() {
   }
 
   return (
-    <div className="login flex items-center justify-center p-12">
+    <main className="login flex items-center justify-center p-12">
       <div className="login-card w-full max-w-lg bg-white text-black rounded-2xl shadow-sm p-8 md:p-10">
         <h2 className="auth-title font-title text-[2.5rem] font-bold text-center">Connexion</h2>
         <p className="login-description font-body text-[#777777] text-center mt-2 mb-8">Connectez-vous à votre compte</p>
@@ -86,7 +86,7 @@ function Login() {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
