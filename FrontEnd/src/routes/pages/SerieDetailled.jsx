@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import Tag from '../../components/general/Tag';
+import Synopsis from '../../components/detail/Synopsis';
+import Volumes from '../../components/detail/Volumes';
+import Comments from '../../components/detail/Comments';
 
 function SerieDetailled() {
   const { id } = useParams();
@@ -31,8 +34,8 @@ function SerieDetailled() {
       });
   }, [id]);
 
-  if (loading) return <div className="serie-detail-page">Chargement...</div>;
-  if (error) return <div className="serie-detail-page">Échec de la requête</div>;
+  if (loading) return <main className="serie-detail-page">Chargement...</main>;
+  if (error) return <main className="serie-detail-page">Échec de la requête</main>;
   if (!serie) return null;
 
   const titresAlternatifsAffiches = serie.titresAlternatifs.map((ta) => ta.titre).join(' / ');
@@ -60,13 +63,13 @@ function SerieDetailled() {
   );
 
   return (
-    <div className="serie-detail-page">
+    <main className="serie-detail-page">
 
-      {/* Bloc 1 : infos */}
+      {/* Bloc 1 : infos Desktop */}
       <div className="serie-infos-desktop hidden md:flex flex-col gap-8 bg-white rounded-2xl shadow-md md:p-8 md:m-12">
         <div className="serie-infos-title flex flex-col gap-1">
-          <div className="serie-info-title-header flex items-center justify-between gap-3">
-            <div className="serie-infon-title-header-container flex items-center gap-4">
+          <div className="serie-infos-title-header flex items-center justify-between gap-3">
+            <div className="serie-infos-title-header-container flex items-center gap-4">
               {user && (
                 <button type="button" className="serie-bookmark text-interactive text-xl" aria-label="Ajouter aux favoris">
                   <FontAwesomeIcon icon={faBookmark} className="w-3 h-3 md:w-6 md:h-6"/>
@@ -97,7 +100,7 @@ function SerieDetailled() {
             className="serie-cover w-40 md:w-50 rounded-lg shadow-sm object-cover"
           />
 
-          <div className="serie-info-bloc flex flex-col gap-3 font-body">
+          <div className="serie-infos-bloc flex flex-col gap-3 font-body">
             {genresDiv}
             {themesDiv}
 
@@ -126,6 +129,7 @@ function SerieDetailled() {
         </div>
       </div>
 
+      {/* Bloc Mobile */}
       <div className="serie-infos-mobile flex md:hidden flex-col gap-4 bg-white rounded-2xl shadow-md p-6 m-6">
         <div className="serie-infos-mobile-top flex gap-4">
           <img
@@ -185,67 +189,14 @@ function SerieDetailled() {
       </div>
 
       {/* Bloc 2 : synopsis */}
-      <div className="serie-synopsis flex flex-col gap-4 bg-white rounded-2xl shadow-md p-6 m-6 md:p-8 md:m-12">
-        <h2 className="font-title font-bold text-2xl text-black">Synopsis</h2>
-        <div className="flex flex-col gap-4 font-synopsis text-black text-sm md:text-base leading-relaxed">
-          {serie.synopsis
-            .split('\n')
-            .filter((paragraphe) => paragraphe.trim() !== '')
-            .map((paragraphe, index) => (
-              <p key={index}>{paragraphe}</p>
-            ))}
-        </div>
-      </div>
+      <Synopsis synopsis={serie.synopsis} />
 
-      {/* Bloc 3 : volumes — flex-wrap (pas de grid), 3 par ligne mobile / 8 par ligne desktop */}
-      <div className="serie-volumes flex flex-col gap-4 bg-white rounded-2xl shadow-md p-6 m-6 md:p-8 md:m-12">
-        <h2 className="font-title font-bold text-2xl text-black">Volumes</h2>
-        <ul className="serie-volumes-list flex flex-wrap gap-6 md:gap-10 w-full px-6">
-          {serie.volumes.map((volume) => (
-            <li key={volume.id} className="serie-volume flex flex-col items-center gap-1 w-[calc((100%-2*1.5rem)/3)] md:w-[calc((100%-7*2.5rem)/8)]">
-              <img
-                src={volume.couvertureUrl}
-                alt={`Couverture Volume ${volume.numeroVolume}`}
-                className="w-full aspect-2/3 rounded-lg shadow-sm object-cover"
-              />
-              <span className="font-body text-sm text-black">Vol. {volume.numeroVolume}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Bloc 3 : volumes */}
+      <Volumes volumes={serie.volumes} />
 
-      {/* Bloc 4 : commentaires — première page (10, déjà appliqué côté back par défaut),
-          pas de pagination fonctionnelle pour la v0 ; séparation Desktop/Mobile à prévoir plus tard */}
-      <div className="serie-commentaires-desktop flex flex-col gap-4 bg-white rounded-2xl shadow-md p-6 m-6 md:p-8 md:m-12">
-        <h2 className="font-title font-bold text-2xl text-black">Commentaires</h2>
-        <ul className="serie-commentaires-list flex flex-col">
-          {serie.commentaires.data.length === 0 && (
-            <li className="font-body text-[#555555] text-sm">Aucun commentaire pour le moment.</li>
-          )}
-          {serie.commentaires.data.map((commentaire) => (
-            <li
-              key={commentaire.id}
-              className="serie-commentaire flex gap-4 py-4 border-t border-[#EEEEEE] first:border-t-0 first:pt-0"
-            >
-              <img
-                src={commentaire.utilisateur.avatarUrl}
-                alt={`Avatar de ${commentaire.utilisateur.pseudo}`}
-                className="w-15 h-15 rounded-full object-cover shrink-0"
-              />
-
-              <div className="flex flex-col gap-1 font-body">
-                <div className="serie-commentaire-header flex items-center gap-2">
-                  <span className="serie-commentaire-pseudo text-black font-bold">{commentaire.utilisateur.pseudo}</span>
-                  {/* TODO : nécessite createdAt côté backend (absent du controller actuel) */}
-                </div>
-                <p className="text-black">{commentaire.contenu}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-    </div>
+      {/* Bloc 4 : commentaires — première page (10, déjà appliqué côté back par défaut) */}
+      <Comments commentaires={serie.commentaires} />
+    </main>
   );
 }
 

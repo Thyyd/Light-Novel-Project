@@ -80,7 +80,7 @@ function Series() {
   }
 
   return (
-    <div className="series-page px-10 py-8">
+    <main className="series-page px-10 py-8">
       <div className="series-header flex items-center justify-between mb-6">
         <h2 className="font-title text-3xl font-bold text-black">Catalogue de séries</h2>
         {user?.role === 'admin' && (
@@ -93,6 +93,7 @@ function Series() {
           type="search"
           placeholder="Rechercher une série par nom..."
           className="w-full max-w-300 shadow-sm bg-white text-black text-sm placeholder-[#777777] px-4 py-2.5 rounded-xl"
+          id="Recherche"
         />
 
         {/* Ligne de filtres Desktop — visuelle uniquement pour le v0 */}
@@ -101,24 +102,28 @@ function Series() {
             <select
               defaultValue=""
               className="border border-[#999999] rounded-md bg-white text-[#333333] font-body font-semibold px-2 py-1"
+              id="Genre"
             >
               <option value="" disabled>Genre</option>
             </select>
             <select
               defaultValue=""
               className="border border-[#999999] rounded-md bg-white text-[#333333] font-body font-semibold px-2 py-1"
+              id="Thème"
             >
               <option value="" disabled>Thème</option>
             </select>
             <select
               defaultValue=""
               className="border border-[#999999] rounded-md bg-white text-[#333333] font-body font-semibold px-2 py-1"
+              id="Éditeur"
             >
               <option value="" disabled>Éditeur</option>
             </select>
             <select
               defaultValue=""
               className="border border-[#999999] rounded-md bg-white text-[#333333] font-body font-semibold px-2 py-1"
+              id="Statut"
             >
               <option value="" disabled>Statut</option>
             </select>
@@ -128,6 +133,7 @@ function Series() {
             <select
               defaultValue=""
               className="border border-[#999999] rounded-md bg-white text-[#333333] font-body font-semibold px-2 py-1"
+              id="Trier"
             >
               <option value="" disabled>Trier : A → Z</option>
             </select>
@@ -227,7 +233,7 @@ function Series() {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

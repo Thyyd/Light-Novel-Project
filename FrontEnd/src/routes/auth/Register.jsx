@@ -61,7 +61,7 @@ function Register() {
   }
 
   return (
-    <div className="register flex items-center justify-center p-12">
+    <main className="register flex items-center justify-center p-12">
       <div className="register-card w-full max-w-lg bg-white text-black rounded-2xl shadow-sm p-8 md:p-10">
         <h2 className="auth-title font-title text-[2.5rem] font-bold text-center">Inscription</h2>
         <p className="register-description font-body text-[#777777] text-center mt-2 mb-8">Créez-vous un compte gratuitement</p>
@@ -108,7 +108,7 @@ function Register() {
         </form>
 
       </div>
-    </div>
+    </main>
   );
 }
 

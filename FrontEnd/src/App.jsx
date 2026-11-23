@@ -5,6 +5,7 @@ import Navbar from './components/navigation/Navbar';
 import Homepage from './routes/pages/Homepage';
 import Series from './routes/pages/Series';
 import SerieDetailled from './routes/pages/SerieDetailled';
+import VolumeDetailled from './routes/pages/VolumeDetailled';
 import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
 // ... imports restants des pages
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/series" element={<Series />} />
             <Route path="/series/:id" element={<SerieDetailled />} />
+            <Route path="/volumes/:id" element={<VolumeDetailled />} />
             <Route
               path="/login"
               element={<RedirectIfAuthenticated><Login /></RedirectIfAuthenticated>}
